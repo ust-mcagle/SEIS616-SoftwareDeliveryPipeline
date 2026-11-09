@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+      python: 3.9
+  pre_build:
+    commands:
+      - echo Test the python application.
+      - pip install -r requirements.txt
+      - pip install -U pytest
+      - pytest
+  build:
+    commands:
+      - echo Build the CSS using less.
+      - npm install -g less@4.1.3
+      - mkdir -p static/css
+      - lessc styles.less static/css/styles.css
+
+artifacts:
+  files:
+    - '**/*'
+  name: python-app-$(date +%y%m%d%H%M).zip
